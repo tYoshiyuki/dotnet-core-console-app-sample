@@ -13,6 +13,11 @@ namespace DotNetCoreConsoleAppSample
 
         static void Main(string[] args)
         {
+            InitializeApplication().Run();
+        }
+
+        private static Application InitializeApplication()
+        {
             // 環境変数の読み込み
             string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (string.IsNullOrWhiteSpace(env))
@@ -31,8 +36,8 @@ namespace DotNetCoreConsoleAppSample
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
-            serviceCollection.BuildServiceProvider()
-                .GetService<Application>().Run();
+            return serviceCollection.BuildServiceProvider()
+                .GetService<Application>();
         }
 
         private static void ConfigureServices(IServiceCollection services)
