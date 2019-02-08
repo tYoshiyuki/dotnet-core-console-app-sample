@@ -2,5 +2,5 @@
 .NET Coreのコンソールアプリケーションのサンプル
 
 ## Feature
-- .NET Core
+- .NET Core 2.2
 - DI
