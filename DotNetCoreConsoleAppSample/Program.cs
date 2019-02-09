@@ -1,7 +1,9 @@
 ﻿using DotNetCoreConsoleAppSample.Configs;
+using DotNetCoreConsoleAppSample.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using System;
 using System.IO;
 
@@ -14,6 +16,7 @@ namespace DotNetCoreConsoleAppSample
         static void Main(string[] args)
         {
             InitializeApplication().Run();
+            NLog.LogManager.Shutdown();
         }
 
         private static Application InitializeApplication()
@@ -22,7 +25,11 @@ namespace DotNetCoreConsoleAppSample
             string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (string.IsNullOrWhiteSpace(env))
             {
+#if DEBUG
                 env = "Development";
+#else
+                env = "Production"; 
+#endif
             }
 
             var builder = new ConfigurationBuilder()
@@ -49,10 +56,13 @@ namespace DotNetCoreConsoleAppSample
             // ログの設定       
             services.AddLogging(builder =>
             {
-                builder.AddConfiguration(Configuration.GetSection("Logging"))
-                    .AddConsole()
-                    .AddDebug();
+                builder.ClearProviders();
+                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.AddNLog(Configuration);
             });
+
+            // サービス設定
+            services.AddTransient<IHelloService, HelloService>();
 
             // Applicationの設定
             services.AddTransient<Application>();

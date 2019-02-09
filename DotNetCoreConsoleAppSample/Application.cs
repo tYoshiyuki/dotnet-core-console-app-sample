@@ -1,19 +1,25 @@
 ﻿using DotNetCoreConsoleAppSample.Configs;
+using DotNetCoreConsoleAppSample.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 
 namespace DotNetCoreConsoleAppSample
 {
+    /// <summary>
+    /// メイン処理クラス
+    /// </summary>
     public class Application
     {
         private readonly ILogger _logger;
         private readonly AppSettings _appSettings;
+        private readonly IHelloService _service;
 
-        public Application (ILogger<Application> logger, IOptions<AppSettings> optionsAccessor)
+        public Application (ILogger<Application> logger, IOptions<AppSettings> optionsAccessor, IHelloService service)
         {
             _logger = logger;
             _appSettings = optionsAccessor.Value;
+            _service = service;
         }
 
         /// <summary>
@@ -50,7 +56,7 @@ namespace DotNetCoreConsoleAppSample
         /// </summary>
         private void Main()
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(_service.Greeting());
             Console.WriteLine(_appSettings.SampleSettings.Key); // Sample Code
         }
 
