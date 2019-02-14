@@ -36,6 +36,8 @@ namespace DotNetCoreConsoleAppSample
             catch (Exception ex)
             {
                 _logger.LogError(ex, "処理失敗");
+                _logger.LogError(ex.Message);
+                _logger.LogError(ex.StackTrace);
             }
             finally
             {
