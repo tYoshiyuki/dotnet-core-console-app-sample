@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using NLog.LayoutRenderers;
 using System;
 using System.IO;
 
@@ -60,6 +61,7 @@ namespace DotNetCoreConsoleAppSample
                 builder.SetMinimumLevel(LogLevel.Trace);
                 builder.AddNLog(Configuration);
             });
+            LayoutRenderer.Register<BuildConfigLayoutRenderer>("buildConfiguration");
 
             // サービス設定
             services.AddTransient<IHelloService, HelloService>();
