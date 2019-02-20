@@ -3,7 +3,12 @@ using System;
 
 namespace DotNetCoreConsoleAppSample.Applications
 {
-    public abstract class BaseApplication
+    public interface IApplication
+    {
+        void Run();
+    }
+
+    public abstract class BaseApplication : IApplication
     {
         protected readonly ILogger _logger;
 
