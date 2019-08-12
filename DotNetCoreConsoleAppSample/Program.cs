@@ -1,4 +1,5 @@
-﻿using DotNetCoreConsoleAppSample.Configs;
+﻿using DotNetCoreConsoleAppSample.Applications;
+using DotNetCoreConsoleAppSample.Configs;
 using DotNetCoreConsoleAppSample.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,7 @@ namespace DotNetCoreConsoleAppSample
             NLog.LogManager.Shutdown();
         }
 
-        private static Application InitializeApplication()
+        private static IApplication InitializeApplication()
         {
             // 環境変数の読み込み
             string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -45,7 +46,7 @@ namespace DotNetCoreConsoleAppSample
             ConfigureServices(serviceCollection);
 
             return serviceCollection.BuildServiceProvider()
-                .GetService<Application>();
+                .GetService<IApplication>();
         }
 
         private static void ConfigureServices(IServiceCollection services)
@@ -67,7 +68,7 @@ namespace DotNetCoreConsoleAppSample
             services.AddTransient<IHelloService, HelloService>();
 
             // Applicationの設定
-            services.AddTransient<Application>();
+            services.AddTransient<IApplication, Application>();
         }
     }
 }
