@@ -9,20 +9,20 @@ namespace DotNetCoreConsoleAppSample.Configs
     [ThreadAgnostic]
     public class BuildConfigLayoutRenderer : LayoutRenderer
     {
-        private string buildconfig;
+        private string _buildconfig;
         private string GetBuildConfig()
         {
-            if (buildconfig != null)
+            if (_buildconfig != null)
             {
-                return buildconfig;
+                return _buildconfig;
             }
 
 #if DEBUG
-            buildconfig = "Debug";
+            _buildconfig = "Debug";
 #else
             buildconfig = "Release";
 #endif
-            return buildconfig;
+            return _buildconfig;
         }
 
         protected override void Append(StringBuilder builder, LogEventInfo logEvent)

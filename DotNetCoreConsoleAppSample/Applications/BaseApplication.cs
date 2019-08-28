@@ -10,11 +10,11 @@ namespace DotNetCoreConsoleAppSample.Applications
 
     public abstract class BaseApplication : IApplication
     {
-        protected readonly ILogger _logger;
+        protected readonly ILogger Logger;
 
-        public BaseApplication(ILogger<Application> logger)
+        protected BaseApplication(ILogger<Application> logger)
         {
-            _logger = logger;
+            Logger = logger;
         }
 
         /// <summary>
@@ -30,9 +30,9 @@ namespace DotNetCoreConsoleAppSample.Applications
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "処理失敗");
-                _logger.LogError(ex.Message);
-                _logger.LogError(ex.StackTrace);
+                Logger.LogError(ex, "処理失敗");
+                Logger.LogError(ex.Message);
+                Logger.LogError(ex.StackTrace);
             }
             finally
             {
@@ -45,7 +45,7 @@ namespace DotNetCoreConsoleAppSample.Applications
         /// </summary>
         protected virtual void Before()
         {
-            _logger.LogInformation("処理開始");
+            Logger.LogInformation("処理開始");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace DotNetCoreConsoleAppSample.Applications
         /// </summary>
         protected virtual void After()
         {
-            _logger.LogInformation("処理完了");
+            Logger.LogInformation("処理完了");
         }
     }
 }
